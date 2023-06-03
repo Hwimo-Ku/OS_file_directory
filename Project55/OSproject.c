@@ -13,7 +13,7 @@
 #define MAX_DIR 50
 #define MAX_NAME 20
 
-
+//9808
 
 //User
 typedef struct tagUserNode {
@@ -63,7 +63,7 @@ typedef struct tagDirectoryTree {
     TreeNode* current;
 }DirectoryTree;
 
-struct MkdirThreadData {//¸ÖÆ¼½º·¹µùÀ» À§ÇØ¼­
+struct MkdirThreadData {//ë©€í‹°ìŠ¤ë ˆë”©ì„ ìœ„í•´ì„œ
     DirectoryTree* dirTree;
     char* dirName;
 };
@@ -334,18 +334,18 @@ int mycp(DirectoryTree* dirTree, char* sName, char* oName) {
     int nread;
 
     if (access(sName, F_OK) != 0) {
-        printf("¿øº» ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.\n");
+        printf("ì›ë³¸ íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n");
         return -1;
     }
     if (strcmp(sName, oName) == 0) {
-        printf("¿øº»°ú ´ë»óÀÌ °°½À´Ï´Ù.\n");
+        printf("ì›ë³¸ê³¼ ëŒ€ìƒì´ ê°™ìŠµë‹ˆë‹¤.\n");
         return -1;
     }
 
-    in = open(sName, O_RDONLY); //¿øº»ÆÄÀÏ
-    out = open(oName, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);//¸¸µéÆÄÀÏ
-    nread = read(in, buf, sizeof(buf)); //ÀĞÀº¸¸Å­ nread°¡ ¿Ã¶ó°¡°í
-    write(out, buf, nread);          //read¸¸Å­ ¾´´Ù.
+    in = open(sName, O_RDONLY); //ì›ë³¸íŒŒì¼
+    out = open(oName, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);//ë§Œë“¤íŒŒì¼
+    nread = read(in, buf, sizeof(buf)); //ì½ì€ë§Œí¼ nreadê°€ ì˜¬ë¼ê°€ê³ 
+    write(out, buf, nread);          //readë§Œí¼ ì“´ë‹¤.
 
     MakeDir(dirTree, oName, 'f');
 
@@ -507,18 +507,18 @@ int MakeDir(DirectoryTree* dirTree, char* dirName, char type)
     TreeNode* tmpNode = NULL;
 
     if (HasPermission(dirTree->current, 'w') != 0) {
-        printf("mkdir: '%s' µğ·ºÅÍ¸®¸¦ ¸¸µé ¼ö ¾ø½À´Ï´Ù: Çã°¡ °ÅºÎ\n", dirName);
+        printf("mkdir: '%s' ë””ë ‰í„°ë¦¬ë¥¼ ë§Œë“¤ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: í—ˆê°€ ê±°ë¶€\n", dirName);
         free(NewNode);
         return -1;
     }
     if (strcmp(dirName, ".") == 0 || strcmp(dirName, "..") == 0) {
-        printf("mkdir: '%s' µğ·ºÅÍ¸®¸¦ ¸¸µé ¼ö ¾ø½À´Ï´Ù\n", dirName);
+        printf("mkdir: '%s' ë””ë ‰í„°ë¦¬ë¥¼ ë§Œë“¤ ìˆ˜ ì—†ìŠµë‹ˆë‹¤\n", dirName);
         free(NewNode);
         return -1;
     }
     tmpNode = IsExistDir(dirTree, dirName, type);
     if (tmpNode != NULL && tmpNode->type == 'd') {
-        printf("mkdir: '%s' µğ·ºÅÍ¸®¸¦ ¸¸µé ¼ö ¾ø½À´Ï´Ù: ÆÄÀÏÀÌ Á¸ÀçÇÕ´Ï´Ù\n", dirName);
+        printf("mkdir: '%s' ë””ë ‰í„°ë¦¬ë¥¼ ë§Œë“¤ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: íŒŒì¼ì´ ì¡´ì¬í•©ë‹ˆë‹¤\n", dirName);
         free(NewNode);
         return -1;
     }
@@ -581,7 +581,7 @@ int RemoveDir(DirectoryTree* dirTree, char* dirName)
     tmpNode = dirTree->current->LeftChild;
 
     if (tmpNode == NULL) {
-        printf("rm: '%s'¸¦ Áö¿ï ¼ö ¾øÀ½: ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", dirName);
+        printf("rm: '%s'ë¥¼ ì§€ìš¸ ìˆ˜ ì—†ìŒ: ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", dirName);
         return -1;
     }
 
@@ -609,7 +609,7 @@ int RemoveDir(DirectoryTree* dirTree, char* dirName)
             DestroyNode(DelNode);
         }
         else {
-            printf("rm: '%s'¸¦ Áö¿ï ¼ö ¾øÀ½: ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", dirName);
+            printf("rm: '%s'ë¥¼ ì§€ìš¸ ìˆ˜ ì—†ìŒ: ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", dirName);
             return -1;
         }
     }
@@ -648,20 +648,20 @@ int MovePath(DirectoryTree* dirTree, char* dirPath)
 
     strncpy(tmpPath, dirPath, MAX_DIR);
     tmpNode = dirTree->current;
-    //dirPath °¡ "/" ÀÎ °æ¿ì root ·Î
+    //dirPath ê°€ "/" ì¸ ê²½ìš° root ë¡œ
     if (strcmp(dirPath, "/") == 0) {
         dirTree->current = dirTree->root;
     }
-    //dirPath °¡ Àı´ë°æ·Î È¤Àº »ó´ë°æ·Î·Î ÁÖ¾îÁú °æ¿ì
+    //dirPath ê°€ ì ˆëŒ€ê²½ë¡œ í˜¹ì€ ìƒëŒ€ê²½ë¡œë¡œ ì£¼ì–´ì§ˆ ê²½ìš°
     else {
-        //Àı´ë °æ·Î´Â ½ÃÀÛÀÌ "/"
+        //ì ˆëŒ€ ê²½ë¡œëŠ” ì‹œì‘ì´ "/"
         if (strncmp(dirPath, "/", 1) == 0) {
             if (strtok(dirPath, "/") == NULL) {
                 return -1;
             }
             dirTree->current = dirTree->root;
         }
-        //»ó´ë °æ·Î´Â ¹Ù·Î µğ·ºÅä¸®
+        //ìƒëŒ€ ê²½ë¡œëŠ” ë°”ë¡œ ë””ë ‰í† ë¦¬
         str = strtok(tmpPath, "/");
         while (str != NULL) {
             val = Movecurrent(dirTree, str);
@@ -790,7 +790,7 @@ int ChangeMode(DirectoryTree* dirTree, int mode, char* dirName)
 
     if (tmpNode != NULL) {
         if (HasPermission(tmpNode, 'w') != 0) {
-            printf("chmod: '%s'ÆÄÀÏÀ» ¼öÁ¤ÇÒ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirName);
+            printf("chmod: '%s'íŒŒì¼ì„ ìˆ˜ì •í•  ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirName);
             return -1;
         }
         tmpNode->mode = mode;
@@ -798,14 +798,14 @@ int ChangeMode(DirectoryTree* dirTree, int mode, char* dirName)
     }
     else if (tmpNode2 != NULL) {
         if (HasPermission(tmpNode2, 'w') != 0) {
-            printf("chmod: '%s'ÆÄÀÏÀ» ¼öÁ¤ÇÒ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirName);
+            printf("chmod: '%s'íŒŒì¼ì„ ìˆ˜ì •í•  ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirName);
             return -1;
         }
         tmpNode2->mode = mode;
         Mode2Permission(tmpNode2);
     }
     else {
-        printf("chmod: '%s¿¡ Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù: ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", dirName);
+        printf("chmod: '%sì— ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤: ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", dirName);
         return -1;
     }
     return 0;
@@ -833,7 +833,7 @@ int ChangeOwner(DirectoryTree* dirTree, char* userName, char* dirName)
 
     if (tmpNode != NULL) {
         if (HasPermission(tmpNode, 'w') != 0) {
-            printf("chown: '%s'ÆÄÀÏÀ» ¼öÁ¤ÇÒ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirName);
+            printf("chown: '%s'íŒŒì¼ì„ ìˆ˜ì •í•  ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirName);
             return -1;
         }
         tmpUser = IsExistUser(usrList, userName);
@@ -841,14 +841,14 @@ int ChangeOwner(DirectoryTree* dirTree, char* userName, char* dirName)
             tmpNode->UID = tmpUser->UID;
         }
         else {
-            printf("chown: Àß¸øµÈ »ç¿ëÀÚ: '%s'\n", userName);
+            printf("chown: ì˜ëª»ëœ ì‚¬ìš©ì: '%s'\n", userName);
             printf("Try 'chown --help' for more information.\n");
             return -1;
         }
     }
     else if (tmpNode2 != NULL) {
         if (HasPermission(tmpNode2, 'w') != 0) {
-            printf("chown: '%s'ÆÄÀÏÀ» ¼öÁ¤ÇÒ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirName);
+            printf("chown: '%s'íŒŒì¼ì„ ìˆ˜ì •í•  ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirName);
             return -1;
         }
         tmpUser = IsExistUser(usrList, userName);
@@ -856,13 +856,13 @@ int ChangeOwner(DirectoryTree* dirTree, char* userName, char* dirName)
             tmpNode2->UID = tmpUser->UID;
         }
         else {
-            printf("chown: Àß¸øµÈ »ç¿ëÀÚ: '%s'\n", userName);
+            printf("chown: ì˜ëª»ëœ ì‚¬ìš©ì: '%s'\n", userName);
             printf("Try 'chown --help' for more information.\n");
             return -1;
         }
     }
     else {
-        printf("chown: '%s'¿¡ Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù: ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", dirName);
+        printf("chown: '%s'ì— ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤: ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", dirName);
         return -1;
     }
     return 0;
@@ -879,7 +879,7 @@ int ChangeOwnerAll(DirectoryTree* dirTree, char* dirName, char* userName1, char*
 
     if (tmpNode != NULL) {
         if (HasPermission(tmpNode, 'w') != 0) {
-            printf("chown: '%s'ÆÄÀÏÀ» ¼öÁ¤ÇÒ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirName);
+            printf("chown: '%s'íŒŒì¼ì„ ìˆ˜ì •í•  ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirName);
             return -1;
         }
         tmpUser1 = IsExistUser(usrList, userName1);
@@ -889,14 +889,14 @@ int ChangeOwnerAll(DirectoryTree* dirTree, char* dirName, char* userName1, char*
             tmpNode->GID = tmpUser2->GID;
         }
         else {
-            printf("chown: Àß¸øµÈ »ç¿ëÀÚ\n");
+            printf("chown: ì˜ëª»ëœ ì‚¬ìš©ì\n");
             printf("Try 'chown --help' for more information.\n");
             return -1;
         }
     }
     else if (tmpNode2 != NULL) {
         if (HasPermission(tmpNode, 'w') != 0) {
-            printf("chown: '%s'ÆÄÀÏÀ» ¼öÁ¤ÇÒ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirName);
+            printf("chown: '%s'íŒŒì¼ì„ ìˆ˜ì •í•  ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirName);
             return -1;
         }
         tmpUser1 = IsExistUser(usrList, userName1);
@@ -906,13 +906,13 @@ int ChangeOwnerAll(DirectoryTree* dirTree, char* dirName, char* userName1, char*
             tmpNode->GID = tmpUser2->GID;
         }
         else {
-            printf("chown: Àß¸øµÈ »ç¿ëÀÚ\n");
+            printf("chown: ì˜ëª»ëœ ì‚¬ìš©ì\n");
             printf("Try 'chown --help' for more information.\n");
             return -1;
         }
     }
     else {
-        printf("chown: '%s'¿¡ Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù: ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", dirName);
+        printf("chown: '%s'ì— ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤: ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", dirName);
         return -1;
     }
     return 0;
@@ -1161,7 +1161,7 @@ void Login(UserList* userList, DirectoryTree* dirTree)
             userList->current = tmpUser;
             break;
         }
-        printf("'%s' À¯Àú°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù\n", userName);
+        printf("'%s' ìœ ì €ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤\n", userName);
     }
     strcpy(tmp, userList->current->dir);
     MovePath(dirTree, tmp);
@@ -1241,9 +1241,9 @@ int Mkdir(DirectoryTree* dirTree, char* cmd)
 
     strcpy(cmd_copy, cmd);
     str = strtok(cmd, " "); //str = mkdir
-    str = strtok(NULL, " "); //str ´Â ¿É¼Ç È¤Àº ¸¸µé µğ·ºÅä¸®(mkdir ÀÌÈÄ ¿À´Â ¹®ÀÚ¿­)
-    if (strcmp(cmd_copy, "mkdir") == 0) { // mkdir ÀÌÈÄ¿¡ ¾Æ¹«°Íµµ ¾øÀ¸¸é
-        printf("mkdir: Àß¸øµÈ ¿¬»êÀÚ\n");
+    str = strtok(NULL, " "); //str ëŠ” ì˜µì…˜ í˜¹ì€ ë§Œë“¤ ë””ë ‰í† ë¦¬(mkdir ì´í›„ ì˜¤ëŠ” ë¬¸ìì—´)
+    if (strcmp(cmd_copy, "mkdir") == 0) { // mkdir ì´í›„ì— ì•„ë¬´ê²ƒë„ ì—†ìœ¼ë©´
+        printf("mkdir: ì˜ëª»ëœ ì—°ì‚°ì\n");
         printf("Try 'mkdir --help' for more information.\n");
         return -1;
     }
@@ -1252,13 +1252,13 @@ int Mkdir(DirectoryTree* dirTree, char* cmd)
     if (str[0] == '-')
     {
         if (strcmp(str, "-p") == 0) {
-            dirName = strtok(NULL, " "); //dirName Àº ¸¸µé µğ·ºÅä¸® 
+            dirName = strtok(NULL, " "); //dirName ì€ ë§Œë“¤ ë””ë ‰í† ë¦¬ 
             if (dirName == NULL) {
-                printf("mkdir: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("mkdir: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'mkdir --help' for more information.\n");
                 return -1;
             }
-            else //mkdir -p ¿É¼Ç¿¡¼­ ¸ÖÆ¼½º·¹µùÀ¸·Î Ã³¸®
+            else //mkdir -p ì˜µì…˜ì—ì„œ ë©€í‹°ìŠ¤ë ˆë”©ìœ¼ë¡œ ì²˜ë¦¬
             {
 
             }
@@ -1277,14 +1277,14 @@ int Mkdir(DirectoryTree* dirTree, char* cmd)
             dirTree->current = tmpNode;
         }
         else {
-            str = strtok(str, "-"); //str Àº - ´ÙÀ½¿¡ ¿À´Â ¹®ÀÚ
+            str = strtok(str, "-"); //str ì€ - ë‹¤ìŒì— ì˜¤ëŠ” ë¬¸ì
             if (str == NULL) {
-                printf("mkdir: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("mkdir: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'mkdir --help' for more information.\n");
                 return -1;
             }
             else {
-                printf("mkdir: ºÎÀûÀıÇÑ ¿É¼Ç -- '%s'\n", str);
+                printf("mkdir: ë¶€ì ì ˆí•œ ì˜µì…˜ -- '%s'\n", str);
                 printf("Try 'mkdir --help' for more information.\n");
                 return -1;
             }
@@ -1293,21 +1293,21 @@ int Mkdir(DirectoryTree* dirTree, char* cmd)
 
     }
 
-    else { //¿É¼ÇÀÌ ¾ø´Â °æ¿ì ¿©±â¼­ str Àº ¸¸µé µğ·ºÅä¸® ÀÌ¸§
-        str_multi = strtok(NULL, " "); //¿©·¯°³ ¸¸µé¸é str_multi != NULL
+    else { //ì˜µì…˜ì´ ì—†ëŠ” ê²½ìš° ì—¬ê¸°ì„œ str ì€ ë§Œë“¤ ë””ë ‰í† ë¦¬ ì´ë¦„
+        str_multi = strtok(NULL, " "); //ì—¬ëŸ¬ê°œ ë§Œë“¤ë©´ str_multi != NULL
         if (str_multi == NULL)
-        {// 1°³¸¸ ¸¸µé °æ¿ì
-            strncpy(tmp, str, MAX_DIR);//str Àº ¸¸µé µğ·ºÅä¸® ÀÌ¸§ È¤Àº °æ·Î
-            if (strstr(str, "/") == NULL) { //Àı´ë °æ·Î°¡ ¾Æ´Ï¶ó¸é
+        {// 1ê°œë§Œ ë§Œë“¤ ê²½ìš°
+            strncpy(tmp, str, MAX_DIR);//str ì€ ë§Œë“¤ ë””ë ‰í† ë¦¬ ì´ë¦„ í˜¹ì€ ê²½ë¡œ
+            if (strstr(str, "/") == NULL) { //ì ˆëŒ€ ê²½ë¡œê°€ ì•„ë‹ˆë¼ë©´
                 MakeDir(dirTree, str, 'd');
                 dirTree->current = tmpNode;
                 return 0;
             }
-            else { //¸¸µé µğ·ºÅä¸®°¡ »ó´ë °æ·Î
-                strncpy(tmp2, getDir(str), MAX_DIR); //tmp2 ´Â »ó´ë °æ·Î
+            else { //ë§Œë“¤ ë””ë ‰í† ë¦¬ê°€ ìƒëŒ€ ê²½ë¡œ
+                strncpy(tmp2, getDir(str), MAX_DIR); //tmp2 ëŠ” ìƒëŒ€ ê²½ë¡œ
                 val = MovePath(dirTree, tmp2);
                 if (val != 0) {
-                    printf("mkdir: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp2);
+                    printf("mkdir: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp2);
                     return -1;
                 }
                 str = strtok(tmp, "/");
@@ -1319,10 +1319,10 @@ int Mkdir(DirectoryTree* dirTree, char* cmd)
                 dirTree->current = tmpNode;
             }
         }
-        else // ¸ÖÆ¼½º·¹µùÀ» ÅëÇØ¼­ ¿©·¯°³¸¦ ÇÑ ¹ø¿¡ ¸¸µé°æ¿ì
+        else // ë©€í‹°ìŠ¤ë ˆë”©ì„ í†µí•´ì„œ ì—¬ëŸ¬ê°œë¥¼ í•œ ë²ˆì— ë§Œë“¤ê²½ìš°
         {
-            str_multi = strtok(cmd_copy, " "); //Ã¹ ÅäÅ« : mkdir
-            dirName = strtok(NULL, " "); //2¹øÂ° ÅäÅ« : ¸¸µé Ã¹¹øÂ° µğ·ºÅä¸®
+            str_multi = strtok(cmd_copy, " "); //ì²« í† í° : mkdir
+            dirName = strtok(NULL, " "); //2ë²ˆì§¸ í† í° : ë§Œë“¤ ì²«ë²ˆì§¸ ë””ë ‰í† ë¦¬
 
             pthread_t threads[MAX_THREAD];
             int num_threads = 0;
@@ -1332,17 +1332,17 @@ int Mkdir(DirectoryTree* dirTree, char* cmd)
                 struct MkdirThreadData* threadData = malloc(sizeof(struct MkdirThreadData));
                 threadData->dirName = dirName;
                 threadData->dirTree = malloc(sizeof(DirectoryTree));
-                threadData->dirTree->root = dirTree->root; // »õ·Î¿î °ªÀ¸·Î ¼³Á¤
+                threadData->dirTree->root = dirTree->root; // ìƒˆë¡œìš´ ê°’ìœ¼ë¡œ ì„¤ì •
                 threadData->dirTree->current = dirTree->current;
-                if (num_threads >= MAX_THREAD) { // ¼öÁ¤: num_threads Áõ°¡ Àü¿¡ Á¶°Ç °Ë»ç
+                if (num_threads >= MAX_THREAD) { // ìˆ˜ì •: num_threads ì¦ê°€ ì „ì— ì¡°ê±´ ê²€ì‚¬
                     printf("maximum number of threads exceeded\n");
-                    free(threadData); // ¸Ş¸ğ¸® ÇØÁ¦
+                    free(threadData); // ë©”ëª¨ë¦¬ í•´ì œ
                     break;
                 }
 
                 if (pthread_create(&thread, NULL, MkdirThread, (void*)threadData) != 0) {
                     printf("failed to create thread\n");
-                    free(threadData); // ¸Ş¸ğ¸® ÇØÁ¦
+                    free(threadData); // ë©”ëª¨ë¦¬ í•´ì œ
                     break;
                 }
                 threads[num_threads] = thread;
@@ -1350,7 +1350,7 @@ int Mkdir(DirectoryTree* dirTree, char* cmd)
 
                 dirName = strtok(NULL, " ");
             }
-            // »ı¼ºµÈ ½º·¹µåµéÀÇ Á¾·á¸¦ ±â´Ù¸²
+            // ìƒì„±ëœ ìŠ¤ë ˆë“œë“¤ì˜ ì¢…ë£Œë¥¼ ê¸°ë‹¤ë¦¼
             for (int i = 0; i < num_threads; i++) {
                 pthread_join(threads[i], NULL);
             }
@@ -1372,7 +1372,7 @@ int rm(DirectoryTree* dirTree, char* cmd)
     int val;
 
     if (cmd == NULL) {
-        printf("rm: Àß¸øµÈ ¿¬»êÀÚ\n");
+        printf("rm: ì˜ëª»ëœ ì—°ì‚°ì\n");
         printf("Try 'rm --help' for more information.\n");
         return -1;
     }
@@ -1381,7 +1381,7 @@ int rm(DirectoryTree* dirTree, char* cmd)
         if (strcmp(cmd, "-r") == 0) {
             str = strtok(NULL, " ");
             if (str == NULL) {
-                printf("rm: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("rm: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'rm --help' for more information.\n");
 
                 return -1;
@@ -1390,12 +1390,12 @@ int rm(DirectoryTree* dirTree, char* cmd)
             if (strstr(str, "/") == NULL) {
                 tmpNode = IsExistDir(dirTree, str, 'd');
                 if (tmpNode == NULL) {
-                    printf("rm: '%s'¸¦ Áö¿ï ¼ö ¾øÀ½: ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", str);
+                    printf("rm: '%s'ë¥¼ ì§€ìš¸ ìˆ˜ ì—†ìŒ: ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", str);
                     return -1;
                 }
                 else {
                     if (HasPermission(dirTree->current, 'w') != 0 || HasPermission(tmpNode, 'w') != 0) {
-                        printf("rm: '%s'µğ·ºÅÍ¸® ¶Ç´Â ÆÄÀÏÀ» Áö¿ï ¼ö ¾ø½À´Ï´Ù: Çã°¡°ÅºÎ\n", str);
+                        printf("rm: '%s'ë””ë ‰í„°ë¦¬ ë˜ëŠ” íŒŒì¼ì„ ì§€ìš¸ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: í—ˆê°€ê±°ë¶€\n", str);
                         return -1;
                     }
                     RemoveDir(dirTree, str);
@@ -1405,7 +1405,7 @@ int rm(DirectoryTree* dirTree, char* cmd)
                 strncpy(tmp2, getDir(str), MAX_DIR);
                 val = MovePath(dirTree, tmp2);
                 if (val != 0) {
-                    printf("rm: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp2);
+                    printf("rm: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp2);
                     return -1;
                 }
                 str = strtok(tmp, "/");
@@ -1415,13 +1415,13 @@ int rm(DirectoryTree* dirTree, char* cmd)
                 }
                 tmpNode = IsExistDir(dirTree, tmp3, 'd');
                 if (tmpNode == NULL) {
-                    printf("rm: '%s'¸¦ Áö¿ï ¼ö ¾øÀ½: ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp3);
+                    printf("rm: '%s'ë¥¼ ì§€ìš¸ ìˆ˜ ì—†ìŒ: ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp3);
                     dirTree->current = currentNode;
                     return -1;
                 }
                 else {
                     if (HasPermission(dirTree->current, 'w') != 0 || HasPermission(tmpNode, 'w') != 0) {
-                        printf("rm: '%s'µğ·ºÅÍ¸® ¶Ç´Â ÆÄÀÏÀ» Áö¿ï ¼ö ¾ø½À´Ï´Ù: Çã°¡°ÅºÎ\n", tmp3);
+                        printf("rm: '%s'ë””ë ‰í„°ë¦¬ ë˜ëŠ” íŒŒì¼ì„ ì§€ìš¸ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: í—ˆê°€ê±°ë¶€\n", tmp3);
                         dirTree->current = currentNode;
                         return -1;
                     }
@@ -1530,23 +1530,23 @@ int rm(DirectoryTree* dirTree, char* cmd)
             }
         }
         else if (strcmp(cmd, "--help") == 0) {
-            printf("»ç¿ë¹ı: rm [<¿É¼Ç>]... [<ÆÄÀÏ>]...\n");
+            printf("ì‚¬ìš©ë²•: rm [<ì˜µì…˜>]... [<íŒŒì¼>]...\n");
             printf("  Remove (unlink) the FILE(s).\n\n");
             printf("  Options:\n");
             printf("    -f, --force    \t ignore nonexistent files and arguments, never prompt\n");
             printf("    -r, --recursive\t remove directories and their contents recursively\n");
-            printf("        --help\t ÀÌ µµ¿ò¸»À» Ç¥½ÃÇÏ°í ³¡³À´Ï´Ù\n");
+            printf("        --help\t ì´ ë„ì›€ë§ì„ í‘œì‹œí•˜ê³  ëëƒ…ë‹ˆë‹¤\n");
             return -1;
         }
         else {
             str = strtok(cmd, "-");
             if (str == NULL) {
-                printf("rm: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("rm: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'rm --help' for more information.\n");
                 return -1;
             }
             else {
-                printf("rm: ºÎÀûÀıÇÑ ¿É¼Ç -- '%s'\n", str);
+                printf("rm: ë¶€ì ì ˆí•œ ì˜µì…˜ -- '%s'\n", str);
                 printf("Try 'rm --help' for more information.\n");
                 return -1;
             }
@@ -1559,16 +1559,16 @@ int rm(DirectoryTree* dirTree, char* cmd)
             tmpNode2 = IsExistDir(dirTree, cmd, 'd');
 
             if (tmpNode2 != NULL) {
-                printf("rm:'%s'¸¦ Áö¿ï ¼ö ¾øÀ½: µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", cmd);
+                printf("rm:'%s'ë¥¼ ì§€ìš¸ ìˆ˜ ì—†ìŒ: ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", cmd);
                 return -1;
             }
             if (tmpNode == NULL) {
-                printf("rm: '%s'¸¦ Áö¿ï ¼ö ¾øÀ½: ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", cmd);
+                printf("rm: '%s'ë¥¼ ì§€ìš¸ ìˆ˜ ì—†ìŒ: ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", cmd);
                 return -1;
             }
             else {
                 if (HasPermission(dirTree->current, 'w') != 0 || HasPermission(tmpNode, 'w') != 0) {
-                    printf("rm: '%s'µğ·ºÅÍ¸® ¶Ç´Â ÆÄÀÏÀ» Áö¿ï ¼ö ¾ø½À´Ï´Ù: Çã°¡°ÅºÎ\n", cmd);
+                    printf("rm: '%s'ë””ë ‰í„°ë¦¬ ë˜ëŠ” íŒŒì¼ì„ ì§€ìš¸ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: í—ˆê°€ê±°ë¶€\n", cmd);
                     return -1;
                 }
                 RemoveDir(dirTree, cmd);
@@ -1578,7 +1578,7 @@ int rm(DirectoryTree* dirTree, char* cmd)
             strncpy(tmp2, getDir(cmd), MAX_DIR);
             val = MovePath(dirTree, tmp2);
             if (val != 0) {
-                printf("rm: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp2);
+                printf("rm: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp2);
                 return -1;
             }
             str = strtok(tmp, "/");
@@ -1590,18 +1590,18 @@ int rm(DirectoryTree* dirTree, char* cmd)
             tmpNode2 = IsExistDir(dirTree, tmp3, 'd');
 
             if (tmpNode2 != NULL) {
-                printf("rm:'%s'¸¦ Áö¿ï ¼ö ¾øÀ½: µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", tmp3);
+                printf("rm:'%s'ë¥¼ ì§€ìš¸ ìˆ˜ ì—†ìŒ: ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", tmp3);
                 dirTree->current = currentNode;
                 return -1;
             }
             if (tmpNode == NULL) {
-                printf("rm: '%s'¸¦ Áö¿ï ¼ö ¾øÀ½: ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp3);
+                printf("rm: '%s'ë¥¼ ì§€ìš¸ ìˆ˜ ì—†ìŒ: ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp3);
                 dirTree->current = currentNode;
                 return -1;
             }
             else {
                 if (HasPermission(dirTree->current, 'w') != 0 || HasPermission(tmpNode, 'w') != 0) {
-                    printf("rm: '%s'µğ·ºÅÍ¸® ¶Ç´Â ÆÄÀÏÀ» Áö¿ï ¼ö ¾ø½À´Ï´Ù: Çã°¡°ÅºÎ\n", tmp3);
+                    printf("rm: '%s'ë””ë ‰í„°ë¦¬ ë˜ëŠ” íŒŒì¼ì„ ì§€ìš¸ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: í—ˆê°€ê±°ë¶€\n", tmp3);
                     dirTree->current = currentNode;
                     return -1;
                 }
@@ -1620,27 +1620,27 @@ int cd(DirectoryTree* dirTree, char* cmd)
     char tmp[MAX_DIR];
     int val;
 
-    if (cmd == NULL) {// cd ´ÙÀ½ ¾Æ¹«°Íµµ¾ÈÄ¡¸é Á¦ÀÚ¸®
+    if (cmd == NULL) {// cd ë‹¤ìŒ ì•„ë¬´ê²ƒë„ì•ˆì¹˜ë©´ ì œìë¦¬
         strcpy(tmp, usrList->current->dir);
         MovePath(dirTree, tmp);
     }
-    else {//cmd °¡ »ó´ëÁÖ¼Ò È¤Àº Àı´ëÁÖ¼Ò
+    else {//cmd ê°€ ìƒëŒ€ì£¼ì†Œ í˜¹ì€ ì ˆëŒ€ì£¼ì†Œ
         tmpNode = IsExistDir(dirTree, cmd, 'd');
         if (tmpNode != NULL)
         {
             if (HasPermission(tmpNode, 'r') != 0) {
-                printf("-bash: cd: '%s': Çã°¡°ÅºÎ\n", cmd);
+                printf("-bash: cd: '%s': í—ˆê°€ê±°ë¶€\n", cmd);
                 return -1;
             }
         }
         tmpNode = IsExistDir(dirTree, cmd, 'f');
         if (tmpNode != NULL) {
-            printf("-bash: cd: '%s': µğ·ºÅÍ¸®°¡ ¾Æ´Õ´Ï´Ù\n", cmd);
+            printf("-bash: cd: '%s': ë””ë ‰í„°ë¦¬ê°€ ì•„ë‹™ë‹ˆë‹¤\n", cmd);
             return -1;
         }
         val = MovePath(dirTree, cmd);
         if (val != 0)
-            printf("-bash: cd: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", cmd);
+            printf("-bash: cd: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", cmd);
     }
     return 0;
 }
@@ -1653,21 +1653,21 @@ int pwd(DirectoryTree* dirTree, Stack* dirStack, char* cmd)
     }
     else if (cmd[0] == '-') {
         if (strcmp(cmd, "--help") == 0) {
-            printf("»ç¿ë¹ı: pwd\n");
+            printf("ì‚¬ìš©ë²•: pwd\n");
             printf("  Print the name of the current working directory.\n\n");
             printf("  Options:\n");
-            printf("        --help\t ÀÌ µµ¿ò¸»À» Ç¥½ÃÇÏ°í ³¡³À´Ï´Ù\n");
+            printf("        --help\t ì´ ë„ì›€ë§ì„ í‘œì‹œí•˜ê³  ëëƒ…ë‹ˆë‹¤\n");
             return -1;
         }
         else {
             str = strtok(cmd, "-");
             if (str == NULL) {
-                printf("pwd: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("pwd: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'pwd --help' for more information.\n");
                 return -1;
             }
             else {
-                printf("pwd: ºÎÀûÀıÇÑ ¿É¼Ç -- '%s'\n", str);
+                printf("pwd: ë¶€ì ì ˆí•œ ì˜µì…˜ -- '%s'\n", str);
                 printf("Try 'pwd --help' for more information.\n");
                 return -1;
             }
@@ -1826,27 +1826,27 @@ int cat(DirectoryTree* dirTree, char* cmd)
         cat2: read w/ line number
     */
     if (cmd == NULL) {
-        printf("cat: Àß¸øµÈ ¿¬»êÀÚ\n");
+        printf("cat: ì˜ëª»ëœ ì—°ì‚°ì\n");
         return -1;
     }
     currentNode = dirTree->current;
 
-    if (strcmp(cmd, ">") == 0) {  // > ¿É¼Ç »ç¿ë ÇßÀ» ¶§
+    if (strcmp(cmd, ">") == 0) {  // > ì˜µì…˜ ì‚¬ìš© í–ˆì„ ë•Œ
         str = strtok(NULL, " ");
         if (str == NULL) {
-            printf("cat: Àß¸øµÈ ¿¬»êÀÚ\n");
+            printf("cat: ì˜ëª»ëœ ì—°ì‚°ì\n");
             printf("Try 'cat --help' for more information.\n");
             return -1;
         }
         strncpy(tmp, str, MAX_DIR);
         if (strstr(str, "/") == NULL) {
-            if (HasPermission(dirTree->current, 'w') != 0) { // ¾²±â±ÇÈ¯ÀÎÁö È®ÀÎ
-                printf("cat: '%s'ÆÄÀÏÀ» ¸¸µé ¼ö ¾øÀ½: ±ÇÇÑ¾øÀ½\n", dirTree->current->name);
+            if (HasPermission(dirTree->current, 'w') != 0) { // ì“°ê¸°ê¶Œí™˜ì¸ì§€ í™•ì¸
+                printf("cat: '%s'íŒŒì¼ì„ ë§Œë“¤ ìˆ˜ ì—†ìŒ: ê¶Œí•œì—†ìŒ\n", dirTree->current->name);
                 return -1;
             }
-            tmpNode = IsExistDir(dirTree, str, 'd'); //¾²±â±ÇÈ¯ÀÌ ÀÖÀ¸¸é IsExistDIR½ÇÇà
+            tmpNode = IsExistDir(dirTree, str, 'd'); //ì“°ê¸°ê¶Œí™˜ì´ ìˆìœ¼ë©´ IsExistDIRì‹¤í–‰
             if (tmpNode != NULL) {
-                printf("cat: '%s': µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", str);
+                printf("cat: '%s': ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", str);
                 return -1;
             }
             else {
@@ -1857,7 +1857,7 @@ int cat(DirectoryTree* dirTree, char* cmd)
             strncpy(tmp2, getDir(str), MAX_DIR);
             val = MovePath(dirTree, tmp2);
             if (val != 0) {
-                printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp2);
+                printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp2);
                 return -1;
             }
             str = strtok(tmp, "/");
@@ -1866,13 +1866,13 @@ int cat(DirectoryTree* dirTree, char* cmd)
                 str = strtok(NULL, "/");
             }
             if (HasPermission(dirTree->current, 'w') != 0) {
-                printf("cat: '%s'ÆÄÀÏÀ» ¸¸µé ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirTree->current->name);
+                printf("cat: '%s'íŒŒì¼ì„ ë§Œë“¤ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirTree->current->name);
                 dirTree->current = currentNode;
                 return -1;
             }
             tmpNode = IsExistDir(dirTree, tmp3, 'd');
             if (tmpNode != NULL) {
-                printf("cat: '%s': µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", tmp3);
+                printf("cat: '%s': ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", tmp3);
                 dirTree->current = currentNode;
                 return -1;
             }
@@ -1889,22 +1889,22 @@ int cat(DirectoryTree* dirTree, char* cmd)
             strncpy(tmp, str, MAX_DIR);
             if (strstr(str, "/") == NULL) {
                 if (HasPermission(dirTree->current, 'w') != 0) {
-                    printf("cat: '%s'ÆÄÀÏÀ» ¸¸µé ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirTree->current->name);
+                    printf("cat: '%s'íŒŒì¼ì„ ë§Œë“¤ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirTree->current->name);
                     return -1;
                 }
                 tmpNode = IsExistDir(dirTree, str, 'd');
                 tmpNode2 = IsExistDir(dirTree, str, 'f');
 
                 if (tmpNode == NULL && tmpNode2 == NULL) {
-                    printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", str);
+                    printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", str);
                     return -1;
                 }
                 else if (tmpNode != NULL && tmpNode2 == NULL) {
-                    printf("cat: '%s': µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", str);
+                    printf("cat: '%s': ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", str);
                     return -1;
                 }
                 else if (tmpNode2 != NULL && HasPermission(tmpNode2, 'r') != 0) {
-                    printf("cat: '%s'ÆÄÀÏÀ» ¿­ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", tmpNode2->name);
+                    printf("cat: '%s'íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", tmpNode2->name);
                     return -1;
                 }
                 else {
@@ -1915,7 +1915,7 @@ int cat(DirectoryTree* dirTree, char* cmd)
                 strncpy(tmp2, getDir(str), MAX_DIR);
                 val = MovePath(dirTree, tmp2);
                 if (val != 0) {
-                    printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp2);
+                    printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp2);
                     return -1;
                 }
                 str = strtok(tmp, "/");
@@ -1927,17 +1927,17 @@ int cat(DirectoryTree* dirTree, char* cmd)
                 tmpNode2 = IsExistDir(dirTree, tmp3, 'f');
 
                 if (tmpNode == NULL && tmpNode2 == NULL) {
-                    printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp3);
+                    printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp3);
                     dirTree->current = currentNode;
                     return -1;
                 }
                 else if (tmpNode != NULL && tmpNode2 == NULL) {
-                    printf("cat: '%s': µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", tmp3);
+                    printf("cat: '%s': ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", tmp3);
                     dirTree->current = currentNode;
                     return -1;
                 }
                 else if (tmpNode2 != NULL && HasPermission(tmpNode2, 'r') != 0) {
-                    printf("cat: '%s'ÆÄÀÏÀ» ¿­ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", tmpNode2->name);
+                    printf("cat: '%s'íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", tmpNode2->name);
                     dirTree->current = currentNode;
                     return -1;
                 }
@@ -1952,21 +1952,21 @@ int cat(DirectoryTree* dirTree, char* cmd)
             strncpy(tmp, str, MAX_DIR);
             if (strstr(str, "/") == NULL) {
                 if (HasPermission(dirTree->current, 'w') != 0) {
-                    printf("cat: '%s'ÆÄÀÏÀ» ¸¸µé ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirTree->current->name);
+                    printf("cat: '%s'íŒŒì¼ì„ ë§Œë“¤ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirTree->current->name);
                     return -1;
                 }
                 tmpNode = IsExistDir(dirTree, str, 'd');
                 tmpNode2 = IsExistDir(dirTree, str, 'f');
                 if (tmpNode == NULL && tmpNode2 == NULL) {
-                    printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", str);
+                    printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", str);
                     return -1;
                 }
                 else if (tmpNode != NULL && tmpNode2 == NULL) {
-                    printf("cat: '%s': µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", str);
+                    printf("cat: '%s': ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", str);
                     return -1;
                 }
                 else if (tmpNode2 != NULL && HasPermission(tmpNode2, 'r') != 0) {
-                    printf("cat: '%s'ÆÄÀÏÀ» ¿­ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", tmpNode2->name);
+                    printf("cat: '%s'íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", tmpNode2->name);
                     return -1;
                 }
                 else {
@@ -1977,7 +1977,7 @@ int cat(DirectoryTree* dirTree, char* cmd)
                 strncpy(tmp2, getDir(str), MAX_DIR);
                 val = MovePath(dirTree, tmp2);
                 if (val != 0) {
-                    printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp2);
+                    printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp2);
                     return -1;
                 }
                 str = strtok(tmp, "/");
@@ -1988,17 +1988,17 @@ int cat(DirectoryTree* dirTree, char* cmd)
                 tmpNode = IsExistDir(dirTree, tmp3, 'd');
                 tmpNode2 = IsExistDir(dirTree, tmp3, 'f');
                 if (tmpNode == NULL && tmpNode2 == NULL) {
-                    printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp3);
+                    printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp3);
                     dirTree->current = currentNode;
                     return -1;
                 }
                 else if (tmpNode != NULL && tmpNode2 == NULL) {
-                    printf("cat: '%s': µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", tmp3);
+                    printf("cat: '%s': ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", tmp3);
                     dirTree->current = currentNode;
                     return -1;
                 }
                 else if (tmpNode2 != NULL && HasPermission(tmpNode2, 'r') != 0) {
-                    printf("cat: '%s'ÆÄÀÏÀ» ¿­ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", tmpNode2->name);
+                    printf("cat: '%s'íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", tmpNode2->name);
                     dirTree->current = currentNode;
                     return -1;
                 }
@@ -2009,23 +2009,23 @@ int cat(DirectoryTree* dirTree, char* cmd)
             }
         }
         else if (strcmp(cmd, "--help") == 0) {
-            printf("»ç¿ë¹ı: cat [<¿É¼Ç>]... [<ÆÄÀÏ>]...\n");
-            printf("  FILE(µé)À» ÇÕÃÄ¼­ Ç¥ÁØ Ãâ·ÂÀ¸·Î º¸³½´Ù.\n\n");
+            printf("ì‚¬ìš©ë²•: cat [<ì˜µì…˜>]... [<íŒŒì¼>]...\n");
+            printf("  FILE(ë“¤)ì„ í•©ì³ì„œ í‘œì¤€ ì¶œë ¥ìœ¼ë¡œ ë³´ë‚¸ë‹¤.\n\n");
             printf("  Options:\n");
             printf("    -n, --number         \t number all output line\n");
             printf("    -b, --number-nonblank\t number nonempty output line\n");
-            printf("        --help\t ÀÌ µµ¿ò¸»À» Ç¥½ÃÇÏ°í ³¡³À´Ï´Ù\n");
+            printf("        --help\t ì´ ë„ì›€ë§ì„ í‘œì‹œí•˜ê³  ëëƒ…ë‹ˆë‹¤\n");
             return -1;
         }
         else {
             str = strtok(cmd, "-");
             if (str == NULL) {
-                printf("cat: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("cat: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'cat --help' for more information.\n");
                 return -1;
             }
             else {
-                printf("cat: ºÎÀûÀıÇÑ ¿É¼Ç -- '%s'\n", str);
+                printf("cat: ë¶€ì ì ˆí•œ ì˜µì…˜ -- '%s'\n", str);
                 printf("Try 'cat --help' for more information.\n");
                 return -1;
             }
@@ -2040,21 +2040,21 @@ int cat(DirectoryTree* dirTree, char* cmd)
         strncpy(tmp, cmd, MAX_DIR);
         if (strstr(cmd, "/") == NULL) {
             if (HasPermission(dirTree->current, 'w') != 0) {
-                printf("cat: '%s'ÆÄÀÏÀ» ¸¸µé ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", dirTree->current->name);
+                printf("cat: '%s'íŒŒì¼ì„ ë§Œë“¤ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", dirTree->current->name);
                 return -1;
             }
             tmpNode = IsExistDir(dirTree, cmd, 'd');
             tmpNode2 = IsExistDir(dirTree, cmd, 'f');
             if (tmpNode == NULL && tmpNode2 == NULL) {
-                printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", cmd);
+                printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", cmd);
                 return -1;
             }
             else if (tmpNode != NULL && tmpNode2 == NULL) {
-                printf("cat: '%s': µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", cmd);
+                printf("cat: '%s': ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", cmd);
                 return -1;
             }
             else if (tmpNode2 != NULL && HasPermission(tmpNode2, 'r') != 0) {
-                printf("cat: '%s'ÆÄÀÏÀ» ¿­ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", tmpNode2->name);
+                printf("cat: '%s'íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", tmpNode2->name);
                 return -1;
             }
             else {
@@ -2066,7 +2066,7 @@ int cat(DirectoryTree* dirTree, char* cmd)
             strncpy(tmp2, getDir(cmd), MAX_DIR);
             val = MovePath(dirTree, tmp2);
             if (val != 0) {
-                printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp2);
+                printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp2);
                 return -1;
             }
             str = strtok(tmp, "/");
@@ -2077,17 +2077,17 @@ int cat(DirectoryTree* dirTree, char* cmd)
             tmpNode = IsExistDir(dirTree, tmp3, 'd');
             tmpNode2 = IsExistDir(dirTree, tmp3, 'f');
             if (tmpNode == NULL && tmpNode2 == NULL) {
-                printf("cat: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", tmp3);
+                printf("cat: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", tmp3);
                 dirTree->current = currentNode;
                 return -1;
             }
             else if (tmpNode != NULL && tmpNode2 == NULL) {
-                printf("cat: '%s': µğ·ºÅÍ¸®ÀÔ´Ï´Ù\n", tmp3);
+                printf("cat: '%s': ë””ë ‰í„°ë¦¬ì…ë‹ˆë‹¤\n", tmp3);
                 dirTree->current = currentNode;
                 return -1;
             }
             else if (tmpNode2 != NULL && HasPermission(tmpNode2, 'r') != 0) {
-                printf("cat: '%s'ÆÄÀÏÀ» ¿­ ¼ö ¾øÀ½: Çã°¡°ÅºÎ\n", tmpNode2->name);
+                printf("cat: '%s'íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŒ: í—ˆê°€ê±°ë¶€\n", tmpNode2->name);
                 dirTree->current = currentNode;
                 return -1;
             }
@@ -2200,7 +2200,7 @@ int chmod_(DirectoryTree* dirTree, char* cmd)
     int tmp;
 
     if (cmd == NULL) {
-        printf("chmod: Àß¸øµÈ ¿¬»êÀÚ\n");
+        printf("chmod: ì˜ëª»ëœ ì—°ì‚°ì\n");
         printf("Try 'chmod --help' for more information.\n");
         return -1;
     }
@@ -2208,7 +2208,7 @@ int chmod_(DirectoryTree* dirTree, char* cmd)
         if (strcmp(cmd, "-R") == 0) {
             str = strtok(NULL, " ");
             if (str == NULL) {
-                printf("chmod: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("chmod: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'chmod --help' for more information.\n");
                 return -1;
             }
@@ -2216,7 +2216,7 @@ int chmod_(DirectoryTree* dirTree, char* cmd)
                 tmp = atoi(str);
                 str = strtok(NULL, " ");
                 if (str == NULL) {
-                    printf("chmod: Àß¸øµÈ ¿¬»êÀÚ\n");
+                    printf("chmod: ì˜ëª»ëœ ì—°ì‚°ì\n");
                     printf("Try 'chmod --help' for more information.\n");
                     return -1;
                 }
@@ -2230,33 +2230,33 @@ int chmod_(DirectoryTree* dirTree, char* cmd)
                     }
                 }
                 else {
-                    printf("chmod: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", str);
+                    printf("chmod: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", str);
                     return -1;
                 }
             }
             else {
-                printf("chmod: Àß¸øµÈ ¸ğµå: '%s'\n", str);
+                printf("chmod: ì˜ëª»ëœ ëª¨ë“œ: '%s'\n", str);
                 printf("Try 'chmod --help' for more information.\n");
                 return -1;
             }
         }
         else if (strcmp(cmd, "--help") == 0) {
-            printf("»ç¿ë¹ı: chmod [¿É¼Ç]... 8Áø¼ö-MODE... µğ·ºÅÍ¸®...\n");
+            printf("ì‚¬ìš©ë²•: chmod [ì˜µì…˜]... 8ì§„ìˆ˜-MODE... ë””ë ‰í„°ë¦¬...\n");
             printf("  Change the mode of each FILE to MODE.\n\n");
             printf("  Options:\n");
             printf("    -R, --recursive\t change files and directories recursively\n");
-            printf("        --help\t ÀÌ µµ¿ò¸»À» Ç¥½ÃÇÏ°í ³¡³À´Ï´Ù\n");
+            printf("        --help\t ì´ ë„ì›€ë§ì„ í‘œì‹œí•˜ê³  ëëƒ…ë‹ˆë‹¤\n");
             return -1;
         }
         else {
             str = strtok(cmd, "-");
             if (str == NULL) {
-                printf("chmod: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("chmod: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'chmod --help' for more information.\n");
                 return -1;
             }
             else {
-                printf("chmod: ºÎÀûÀıÇÑ ¿É¼Ç -- '%s'\n", str);
+                printf("chmod: ë¶€ì ì ˆí•œ ì˜µì…˜ -- '%s'\n", str);
                 printf("Try 'chmod --help' for more information.\n");
                 return -1;
             }
@@ -2267,14 +2267,14 @@ int chmod_(DirectoryTree* dirTree, char* cmd)
             tmp = atoi(cmd);
             str = strtok(NULL, " ");
             if (str == NULL) {
-                printf("chmod: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("chmod: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'chmod --help' for more information.\n");
                 return -1;
             }
             ChangeMode(dirTree, tmp, str);
         }
         else {
-            printf("chmod: Àß¸øµÈ ¸ğµå: '%s'\n", cmd);
+            printf("chmod: ì˜ëª»ëœ ëª¨ë“œ: '%s'\n", cmd);
             printf("Try 'chmod --help' for more information.\n");
             return -1;
         }
@@ -2293,14 +2293,14 @@ int chown_(DirectoryTree* dirTree, char* cmd)
     str1 = strtok(NULL, " ");
     str2 = strtok(NULL, " ");
 
-    if (str2 == NULL) // UID¸¸ º¯È¯ cmd=º¯È¯ÀÚ str1=µğ·ºÅä¸®
+    if (str2 == NULL) // UIDë§Œ ë³€í™˜ cmd=ë³€í™˜ì str1=ë””ë ‰í† ë¦¬
     {
         tmpUser = IsExistUser(usrList, cmd);
         if (tmpUser != NULL) {
             strncpy(tmp1, cmd, MAX_NAME);
         }
         else {
-            printf("chown: Àß¸øµÈ »ç¿ëÀÚ: '%s'\n", tmp1);
+            printf("chown: ì˜ëª»ëœ ì‚¬ìš©ì: '%s'\n", tmp1);
             printf("Try 'chown --help' for more information.\n");
             return -1;
         }
@@ -2309,18 +2309,18 @@ int chown_(DirectoryTree* dirTree, char* cmd)
             ChangeOwner(dirTree, tmp1, str1);
         }
         else {
-            printf("chown: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", str1);
+            printf("chown: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", str1);
             return -1;
         }
     }
-    else if (cmd != NULL && str1 != NULL) //str1,cmd º¯È¯ÀÚ, str2=µğ·ºÅä¸®
+    else if (cmd != NULL && str1 != NULL) //str1,cmd ë³€í™˜ì, str2=ë””ë ‰í† ë¦¬
     {
         tmpUser = IsExistUser(usrList, cmd);
         if (tmpUser != NULL) {
             strncpy(tmp1, cmd, MAX_NAME);
         }
         else {
-            printf("chown: Àß¸øµÈ »ç¿ëÀÚ: '%s'\n", cmd);
+            printf("chown: ì˜ëª»ëœ ì‚¬ìš©ì: '%s'\n", cmd);
             printf("Try 'chown --help' for more information.\n");
             return -1;
         }
@@ -2329,7 +2329,7 @@ int chown_(DirectoryTree* dirTree, char* cmd)
             strncpy(tmp2, str1, MAX_NAME);
         }
         else {
-            printf("chown: Àß¸øµÈ »ç¿ëÀÚ: '%s'\n", str1);
+            printf("chown: ì˜ëª»ëœ ì‚¬ìš©ì: '%s'\n", str1);
             printf("Try 'chown --help' for more information.\n");
             return -1;
         }
@@ -2338,7 +2338,7 @@ int chown_(DirectoryTree* dirTree, char* cmd)
             ChangeOwnerAll(dirTree, str2, tmp1, tmp2);
         }
         else {
-            printf("chown: '%s': ±×·± ÆÄÀÏÀÌ³ª µğ·ºÅÍ¸®°¡ ¾ø½À´Ï´Ù\n", str2);
+            printf("chown: '%s': ê·¸ëŸ° íŒŒì¼ì´ë‚˜ ë””ë ‰í„°ë¦¬ê°€ ì—†ìŠµë‹ˆë‹¤\n", str2);
             return -1;
         }
     }
@@ -2356,29 +2356,29 @@ int find_(DirectoryTree* dirTree, char* cmd)
         if (strcmp(cmd, "-name") == 0) {
             str = strtok(NULL, " ");
             if (str == NULL) {
-                printf("find: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("find: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'find --help' for more information.\n");
                 return -1;
             }
             FindDir(dirTree, str, 0);
         }
         else if (strcmp(cmd, "--help") == 0) {
-            printf("»ç¿ë¹ı: find [<¿É¼Ç>]... [<ÆÄÀÏ>]...\n");
+            printf("ì‚¬ìš©ë²•: find [<ì˜µì…˜>]... [<íŒŒì¼>]...\n");
             printf("\n");
             printf("  Options:\n");
             printf("    -name\t finds file by name\n");
-            printf("        --help\t ÀÌ µµ¿ò¸»À» Ç¥½ÃÇÏ°í ³¡³À´Ï´Ù\n");
+            printf("        --help\t ì´ ë„ì›€ë§ì„ í‘œì‹œí•˜ê³  ëëƒ…ë‹ˆë‹¤\n");
             return -1;
         }
         else {
             str = strtok(cmd, "-");
             if (str == NULL) {
-                printf("find: Àß¸øµÈ ¿¬»êÀÚ\n");
+                printf("find: ì˜ëª»ëœ ì—°ì‚°ì\n");
                 printf("Try 'find --help' for more information.\n");
                 return -1;
             }
             else {
-                printf("find: ºÎÀûÀıÇÑ ¿É¼Ç -- '%s'\n", str);
+                printf("find: ë¶€ì ì ˆí•œ ì˜µì…˜ -- '%s'\n", str);
                 printf("Try 'find --help' for more information.\n");
                 return -1;
             }
@@ -2399,7 +2399,7 @@ void Instruction(DirectoryTree* dirTree, char* cmd)
     char tmp[MAX_LENGTH];
     int val;
 
-    strcpy(tmp, cmd); // tmp ´Â cmd  ¿Í µ¿ÀÏ
+    strcpy(tmp, cmd); // tmp ëŠ” cmd  ì™€ ë™ì¼
     if (strcmp(cmd, "") == 0 || cmd[0] == ' ') {
         return;
     }
@@ -2472,10 +2472,10 @@ void Instruction(DirectoryTree* dirTree, char* cmd)
         find_(dirTree, str);
     }
     else if (strcmp(cmd, "exit") == 0) {
-        printf("·Î±×¾Æ¿ô\n");
+        printf("ë¡œê·¸ì•„ì›ƒ\n");
         exit(0);
     }
-    else if (strcmp(str, "grep") == 0) { //¼öÁ¤Áß
+    else if (strcmp(str, "grep") == 0) { //ìˆ˜ì •ì¤‘
         str = strtok(NULL, " ");
         str1 = strtok(NULL, " ");
         str2 = strtok(NULL, " ");
@@ -2485,7 +2485,7 @@ void Instruction(DirectoryTree* dirTree, char* cmd)
             grep(str, str1);
     }
     else {
-        printf("'%s': ¸í·ÉÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù\n", cmd);
+        printf("'%s': ëª…ë ¹ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤\n", cmd);
     }
     return;
 }
@@ -2619,11 +2619,11 @@ void GetWeekday(int i)
         break;
     }
 }
-//Ãß°¡ÇÑ ºÎºĞ
+//ì¶”ê°€í•œ ë¶€ë¶„
 void* MkdirThread(void* arg) {
     ThreadData* data = (ThreadData*)arg;
     Mkdir(data->dirTree, data->dirName);
     pthread_exit(NULL);
 }
 
-//Ãß°¡ÇÑ ºÎºĞ ³¡
+//ì¶”ê°€í•œ ë¶€ë¶„ ë
