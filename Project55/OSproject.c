@@ -14,7 +14,7 @@
 #define MAX_NAME 20
 
 //9808
-
+//다시 테스트용 
 //User
 typedef struct tagUserNode {
     char name[MAX_NAME];
